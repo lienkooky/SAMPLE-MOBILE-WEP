@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "baseUrl": "src", // add 절대경로
+    "target": "es5", // add  TypeScript 소스 코드를 ECMAScript (JavaScript)로 컴파일
+    "forceConsistentCasingInFileNames" : true, // add 파일 이름의 대소문자 일관성을 강제
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -7,7 +10,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node", // add "classic", "node", "classic" + "node", "bundler : 번들러에게 모듈 해석을 위임"
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -21,6 +24,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "next.config.mjs"],
   "exclude": ["node_modules"]
 }

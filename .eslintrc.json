@@ -1,3 +1,69 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true, // 브라우저 환경에서 사용되는 전역 객체(window, document, navigator)와 API(localStorage, sessionStorage, XMLHttpRequest)를 인식하도록 ESLint를 구성
+    "es2021": true // ECMAScript는 JavaScript의 표준화된 버전
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:prettier/recommended",
+    "next/core-web-vitals"
+  ], // 순서대로 우선순위 결정 및 설정 적용, 파일을 확장하는 역할
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true // JSX가 JavaScript의 일부로 간주되지 않고 별도의 확장으로 간주되므로 JSX를 사용하기 위해서는 이 옵션을 활성화, ESLint에 JSX를 인식하도록 지시
+    },
+    "project": "tsconfig.json", // 파일을 지정하는 것은 더 명확한 설정을 제공
+    "ecmaVersion": 12,
+    "sourceType": "module" // import,export로 실행 :: commonjs는 require 및 module.exportst로 실행
+  }, // ESLint의 파서에 대한 옵션을 설정하는 데 사용
+  "ignorePatterns": ["next.config.js"], // eslint가 이 파일을 무시하도록 설정하는 것이 일반적 & 이렇게 하면 eslint가 해당 파일에 대해 불필요한 경고나 오류를 발생시키지 않음
+  "plugins": ["@html-eslint", "@typescript-eslint", "prettier"], // 실제 파일을 활성화하는 역할
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "parser": "@html-eslint/parser",
+      "extends": ["plugin:@html-eslint/recommended"]
+    }
+  ], // 특정 폴더에 있는 파일에 대해서만 다른 규칙을 적용하고 싶을 때 사용
+  "rules": {
+    "prettier/prettier": [
+      "error", // Prettier와 충돌하는 ESLint 규칙을 에러로 처리
+      {
+        "singleQuote": true,
+        "printWidth": 120,
+        "endOfLine": "auto",
+        "bracketSpacing": false
+      }
+    ],
+    "semi": [2, "always"], // 세미콜론 안붙이면 eslint가 "error:2" 처리
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true // 이스케이프 문자(\)를 사용하지 않고 큰따옴표 문자열에 삽입 가능
+      }
+    ],
+    /* ↓↓↓웹 애플리케이션의 품질과 접근성을 향상에 도움을 줍니다.↓↓↓ */
+    "react/button-has-type": "off", // button type 미요구
+    "react/jsx-no-useless-fragment": "off", // fragment 사용
+    "react/jsx-props-no-spreading": "off", // 객체 spread로 전달 가능
+    /*"react/no-danger": "off" // 이건 dangerouslySetInnerHTML iframe 계약서 가져오는 것 떄문에 쓴듯*/
+    "react/require-default-props": "off", // prop에 default값 미지정 { name = 'Guest' }
+    "import/prefer-default-export": "off", // 한 파일에 여러 개의 exports를 사용 가능
+    "no-console": "off", // console.log()를 사용 가능
+    "no-param-reassign": "off", // 매개변수에 값을 재할당 가능
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }], // "no-plusplus" 규칙은 증감 연산자(++ 및 --)를 사용하는 것을 제한하는 규칙, 옵션으로 allowForLoopAfterthoughts: true를 설정했기 때문에, 반복문의 후속 조건으로 증감 연산자를 사용하는 것은 허용
+    "jsx-a11y/anchor-is-valid": "off", // <a> 요소에 href 속성이 없어도 경고가 발생 안함
+    "jsx-a11y/no-noninteractive-element-interactions": "off", // 비 대화형 요소(<div>, <span> 등)에 대한 이벤트 핸들러 사용 가능, 비 대화형 요소(<a>, <button>, <input>, <textarea>)
+    "jsx-a11y/no-static-element-interactions": "off", // 정적 요소에 이벤트 핸들러를 추가 가능
+    "jsx-a11y/click-events-have-key-events": "off", //  클릭 이벤트만 허용, 키보드 이벤트 불허
+    "@next/next/no-img-element": "off" // <img> 요소 사용 가능
+  }
 }
+
+
+/* JSX-A11Y는 React 애플리케이션에서 웹 접근성을 향상시키기 위한 규칙을 제공하는 eslint 플러그인 
+"A11Y"는 "accessibility"의 11개의 문자를 생략한 것으로, 웹 접근성을 의미 */
